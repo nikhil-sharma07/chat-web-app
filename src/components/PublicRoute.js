@@ -6,6 +6,7 @@ const PublicRoute = ({ children, ...routeProps }) => {
   const profile = false;
 
   if (profile) {
+    //eslint-disable-next-line
     return <Redirect to="/signin" />;
   }
   return <Route {...routeProps}>{children}</Route>;
