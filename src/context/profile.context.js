@@ -29,12 +29,13 @@ useEffect(() => {
                 console.log(data);
             });
     }else{
+        setIsLoading(false);
+        setProfile(null);
+        
         if(userRef){
             userRef.off();
         }
 
-        setProfile(null);
-        setIsLoading(false);
     }
 });
 
