@@ -38,7 +38,7 @@ const EditableInputs = ({initialValue, onSave, label=null, placeholder="Write yo
             placeholder={placeholder} 
             value={input}
             onChange={onInputChange}
-            />
+        />
 
         <InputGroup.Button onClick={onEditClick}>
             <Icon icon={isEditable ? 'close' : 'edit2'} />
