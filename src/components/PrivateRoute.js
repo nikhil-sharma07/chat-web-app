@@ -1,11 +1,18 @@
-//eslint-disable-next-line
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
+import { Container, Loader } from 'rsuite';
+import { useProfile } from '../context/profile.context';
 
 const PrivateRoute = ({ children, ...routeProps }) => {
-  const profile = false;
+  const {isLoading, profile} = useProfile();
+  console.log(profile);
+  if(isLoading && !profile){
+    return <Container>
+      <Loader center vertical size="md" content="Loading" speed="slow" />
+    </Container>
+  }
 
-  if (!profile) {
+  if (!profile && !isLoading) {
     return <Redirect to="/signin" />;
   }
   return <Route {...routeProps}>{children}</Route>;
