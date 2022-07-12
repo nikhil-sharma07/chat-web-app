@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
-import { auth } from '../../misc/firebase';
 import {Alert, Tag, Icon, Button} from 'rsuite';
-import firebase from 'firebase/app';
+import { auth } from '../../misc/firebase';
 
 const ProviderBlock = () => {
   const [isConnected, setIsConnected] = useState({
-    'google.com': auth.currentUser.providerData.some(
+    'google.com': auth.currentUser?.providerData.some(
         data=>data.providerId === 'google.com'
     ),
-    'facebook.com': auth.currentUser.providerData.some(
+    'facebook.com': auth.currentUser?.providerData.some(
         data=>data.providerId === 'facebook.com'
     ),
   });
@@ -18,9 +17,9 @@ const ProviderBlock = () => {
         return {
             ...p,
             [providerId]: value
-        }
-    })
-  }
+        };
+    });
+  };
 
   const unlink = async (providerId) => {
     try {
@@ -94,3 +93,6 @@ const ProviderBlock = () => {
 }
 
 export default ProviderBlock
+
+
+

@@ -17,7 +17,7 @@ const Signin = () => {
 
 
       Alert.success('Signed In', 4000);
-    }catch{
+    }catch(err){
       Alert.error(err.message, 4000);
     }
   }

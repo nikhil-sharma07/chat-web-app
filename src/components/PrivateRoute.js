@@ -5,14 +5,14 @@ import { useProfile } from '../context/profile.context';
 
 const PrivateRoute = ({ children, ...routeProps }) => {
   const {isLoading, profile} = useProfile();
-  console.log(profile);
   if(isLoading && !profile){
-    return <Container>
+    return (<Container>
       <Loader center vertical size="md" content="Loading" speed="slow" />
     </Container>
+    );
   }
 
-  if (!profile) {
+  if (!profile && !isLoading) {
     return <Redirect to="/signin" />;
   }
   return <Route {...routeProps}>{children}</Route>;

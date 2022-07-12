@@ -1,4 +1,4 @@
-import React, { Profiler } from 'react'
+import React from 'react'
 import {Drawer, Button, Divider, Alert } from 'rsuite';
 import { useProfile } from '../../context/profile.context';
 import { database } from '../../misc/firebase';
@@ -47,7 +47,7 @@ const Dashboard = ({onSignOut}) => {
     </Drawer.Footer>
     
     </>
-  )
-}
+  );
+};
 
 export default Dashboard
