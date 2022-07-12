@@ -1,6 +1,5 @@
 import React,{memo} from 'react'
 import { Button, Modal } from 'rsuite';
-import { TREE_NODE_DROP_POSITION } from 'rsuite/lib/TreePicker';
 import { useCurrentRoom } from '../../../context/current-room.context'
 import { useModalState } from '../../../misc/custom-hooks';
 

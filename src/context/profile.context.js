@@ -13,8 +13,8 @@ useEffect(() => {
     let userRef;
 
     const authUnSub=auth.onAuthStateChanged(authObj => {
+        console.log(authObj);
         if(authObj){
-            
             userRef = database.ref(`/profiles/${authObj.uid}`);
             userRef.on('value', snap => {
                 const {name, createdAt, avatar} = snap.val();
@@ -23,20 +23,19 @@ useEffect(() => {
                     createdAt,
                     avatar,
                     uid: authObj.uid,
-                    email: authObj.email
+                    email: authObj.email,
                 };
                 setProfile(data);
                 setIsLoading(false);
                 console.log(data);
             });
     }else{
-        setIsLoading(false);
-        setProfile(null);
-        
         if(userRef){
             userRef.off();
         }
 
+        setProfile(null);
+        setIsLoading(false);
     }
 });
 
@@ -50,10 +49,12 @@ useEffect(() => {
 
 
 
-    return <ProfileContext.Provider value = {{isLoading,profile}}>
-        {children}
-    </ProfileContext.Provider>
-}
+    return (
+        <ProfileContext.Provider value = {{isLoading,profile}}>
+            {children}
+        </ProfileContext.Provider>
+    );
+};
 
 
 export const useProfile = () => useContext(ProfileContext);
