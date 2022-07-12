@@ -1,7 +1,7 @@
 import React from 'react'
-import Top from '../../components/chat-window/top';
-import Messages from '../../components/chat-window/messages';
-import Bottom from '../../components/chat-window/bottom';
+import Top from '../../components/chat-window/top/index';
+import Messages from '../../components/chat-window/messages/index';
+import Bottom from '../../components/chat-window/bottom/index';
 import { useParams } from 'react-router-dom';
 import { Loader } from 'rsuite';
 import { useRooms } from '../../context/room.context';
@@ -34,6 +34,7 @@ const Chat = () => {
       <div className='chat-top'>
         <Top />
       </div>
+
       <div  className='chat-middle'>
         <Messages />
       </div>

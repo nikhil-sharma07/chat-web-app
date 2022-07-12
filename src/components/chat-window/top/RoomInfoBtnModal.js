@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{memo} from 'react'
 import { Button, Modal } from 'rsuite';
 import { TREE_NODE_DROP_POSITION } from 'rsuite/lib/TreePicker';
 import { useCurrentRoom } from '../../../context/current-room.context'
@@ -35,4 +35,4 @@ const RoomInfoBtnModal = () => {
   )
 }
 
-export default RoomInfoBtnModal
+export default memo(RoomInfoBtnModal);
