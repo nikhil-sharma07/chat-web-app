@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import Top from '../../components/chat-window/top/index';
 import Messages from '../../components/chat-window/messages/index';
 import Bottom from '../../components/chat-window/bottom/index';
@@ -13,7 +13,12 @@ import { auth } from '../../misc/firebase';
 const Chat = () => {
 
   const {chatId} = useParams();
+
   const rooms = useRooms();
+  
+  useEffect(() => {
+    window.chatId = chatId;
+  }, [chatId]);
 
   if(!rooms){
     return <Loader center vertical size="md" content="Loading" speed="slow" />

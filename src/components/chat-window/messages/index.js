@@ -53,14 +53,14 @@ const Messages = () => {
       return Alert.error(err.message, 4000);
     }
 
-    if(file){
-      try{
-        const fileRef=storage.refFromURL(file.url)
-        await fileRef.delete();
-      }catch(err){
-        Alert.error(err.message);
-      }
-    }
+    // if(file){
+    //   try{
+    //     const fileRef=storage.refFromURL(file.url)
+    //     await fileRef.delete();
+    //   }catch(err){
+    //     Alert.error(err.message);
+    //   }
+    // }
 
   }, [chatId, messages])
 
