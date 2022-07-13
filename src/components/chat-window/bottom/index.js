@@ -89,7 +89,7 @@ const Bottom = () => {
         Alert.error(err.message);
       }
 
-  }, [chatId, profile])
+  }, [profile])
 
 
   return (

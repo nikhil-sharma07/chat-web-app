@@ -5,7 +5,7 @@ import { useParams } from 'react-router';
 import { storage } from '../../../misc/firebase';
 
 const AudioMsgBtn = ({afterUpload}) => {
-  const {chatId} = useParams();
+  const { chatId } = useParams();
   const [isRecording, setIsRecording] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
 
@@ -19,10 +19,10 @@ const AudioMsgBtn = ({afterUpload}) => {
     try{
         const snap=await storage
         .ref(`/chat/${chatId}`)
-        .child(`audio_${Date.now}.mp3`)
+        .child(`audio_${Date.now()}.mp3`)
         .put(data.blob, {
              cacheControl: `public, max-age=${3600*24*3}`,
-        });
+        })
 
 
         const file={
@@ -30,6 +30,7 @@ const AudioMsgBtn = ({afterUpload}) => {
             name: snap.metadata.name,
             url: await snap.ref.getDownloadURL()
         }
+
         setIsUploading(false);
         afterUpload([file])
     }catch(err){
@@ -40,7 +41,10 @@ const AudioMsgBtn = ({afterUpload}) => {
   }, [afterUpload, chatId])
 
     return (
-    <InputGroup.Button onClick={onClick} disabled={isUploading} className={isRecording ? 'animate-blink' : ''}>
+    <InputGroup.Button 
+        onClick={onClick} 
+        disabled={isUploading} 
+        className={isRecording ? 'animate-blink' : ''}>
         <Icon icon = 'microphone' />
         <ReactMic
           record={isRecording}
@@ -52,4 +56,4 @@ const AudioMsgBtn = ({afterUpload}) => {
   )
 }
 
-export default AudioMsgBtn
+export default AudioMsgBtn;
