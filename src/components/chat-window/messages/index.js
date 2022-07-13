@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { database } from '../../../misc/firebase';
+import { auth, database } from '../../../misc/firebase';
 import { transformToArrWithId } from '../../../misc/helpers';
 import MessageItem from './MessageItem';
 import {Alert} from 'rsuite';
@@ -23,6 +23,67 @@ const Messages = () => {
       messagesRef.off('value');
     }
   },[chatId])
+
+  const handleDelete = useCallback(async(msgId) => {
+    if(!window.confirm('Delete this message?')){
+      return;
+    }
+
+    const isLast = messages[messages.length-1].id === msgId;
+
+    const updates = {};
+    updates[`/messages/${msgId}`] = null;
+
+    if(isLast && messages.length>1){
+      updates[`/rooms/${chatId}/lastMessage`] = {
+        ...messages[messages.length-2],
+        msgId: messages[messages.length-2].id
+      }
+    }
+
+    if(isLast && messages.length === 1){
+      updates[`/rooms/${chatId}/lastMessage`] = null;
+    }
+
+
+    try{
+      database.ref().update(updates);
+      Alert.info('Message has been deleted', 4000);
+    }catch(err){
+      Alert.error(err.message, 4000);
+    }
+
+  })
+
+
+  const handleLike = useCallback(async (msgId) => {
+    const {uid} = auth.currentUser;
+    const messageRef = database.ref(`/messages/${msgId}`);
+    let alertMsg;
+    
+    await messageRef.transaction(msg => {
+      if(msg){
+        if(msg.likes && msg.likes[uid]){
+          msg.likeCount-=1;
+          msg.likes[uid] = null;
+          alertMsg = 'Like Removed';
+        }
+        else{
+          msg.likeCount += 1;
+
+          if(!msg.likes){
+            msg.likes = {};
+          }
+
+          msg.likes[uid]=true;
+          alertMsg = 'Like Added';
+        }
+      }
+      return msg;
+    });
+    
+    Alert.info(alertMsg, 4000);
+  }, []);
 
   
   const handleAdmin = useCallback(async (uid) => {
@@ -52,7 +113,7 @@ const Messages = () => {
     <ul className='msg-list custom-scroll'>
       {isChatEmpty && <li>Write your first message</li>}
       {canShowMessages && messages.map(msg => 
-        <MessageItem key={msg.id} messages={msg} handleAdmin={handleAdmin}/>
+        <MessageItem key={msg.id} message={msg} handleAdmin={handleAdmin} handleLike={handleLike} handleDelete={handleDelete}/>
       )}
     </ul>
   )
