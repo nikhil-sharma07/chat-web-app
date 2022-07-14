@@ -10,8 +10,8 @@ const RoomInfoBtnModal = () => {
 
     return (
     <>
-        <Button appearance='link' className='px-0' onClick={open}>
-            Room Info..
+        <Button appearance='link' color='red' className='px-0' onClick={open}>
+            Room Information
         </Button>
 
         <Modal show={state} onHide={close}>
